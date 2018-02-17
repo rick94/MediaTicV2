@@ -24,18 +24,24 @@ def createGraphElement(line, attributes):
     return element
 
 def parseGDF(file_name):
-    element_list = []
+    edge_list = []
+    node_list = []
+    is_node = True
     gdf_file_data = readGDF(file_name)
     attribute_list = []
     for line in gdf_file_data:
         line = line[:-2]
-        if line.startswith("nodedef>") or line.startswith("edgedef>"):
+        if not line.startswith("nodedef>") and not line.startswith("edgedef>"):
+            if is_node:
+                node_list.append(createGraphElement(line, attribute_list))
+            else:
+                edge_list.append(createGraphElement(line, attribute_list))
+        else:
+            if line.startswith("edgedef>"): is_node = False
             pos = line.find('>')
             header = line[:pos + 1]
             attribute_list = getAttributes(line, header)
-        else:
-            element_list.append(createGraphElement(line, attribute_list))
-    return element_list
+    return (node_list, edge_list)
 
 
 
@@ -56,4 +62,4 @@ def parseGDF(file_name):
 #print(createGraphElement(line2[:-1], node_attributes))
 
 elements = parseGDF("sample.gdf")
-print (elements[65419])
+#print (elements[65419])
