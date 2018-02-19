@@ -42,7 +42,7 @@ def getAttributes(attribute_list):
         for pair in iterattrs:
             attribute_name = pair[0]
             attribute_value = pair[1]
-            if not isinstance(attribute_value, int):
+            if not attribute_value.isdigit():
                 attribute_value = "'" + attribute_value + "'"
             else:
                 attribute_value = str(attribute_value)
