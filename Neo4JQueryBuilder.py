@@ -41,7 +41,7 @@ def getAttributes(attribute_list):
         next(iterattrs) # Necesario para saltarse el primer elemento
         for pair in iterattrs:
             attribute_name = pair[0]
-            attribute_value = pair[1]
+            attribute_value = escapeSpecialChars(pair[1])
             if not attribute_value.isdigit():
                 attribute_value = "'" + attribute_value + "'"
             else:
@@ -49,6 +49,12 @@ def getAttributes(attribute_list):
             attributes += ", " + attribute_name + ":" + attribute_value
     attributes += "}"
     return attributes
+
+def escapeSpecialChars(attribute_value):
+    text = attribute_value.replace(r"'", r"\'")
+    text = text.replace(r'"', r'\"')
+    text = text.replace('\r\n', r' ')
+    return  text
 
 
 ##MATCH (a:Person {name: 'Juan'}), (b:Person {name: 'Carlos'}) MERGE (a)-[r:DETESTS]- (b) set r += {place:'TEHK'}

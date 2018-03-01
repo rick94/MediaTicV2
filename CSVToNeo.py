@@ -7,7 +7,7 @@ reaction_dic = {}
 def importCSVReactionNodeToNeo(file_name):
     global reaction_dic
     query_list = []
-    with open (file_name, newline='') as csv_file:
+    with open (file_name, newline='', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         current_post_id = ""
         for row in csv_reader:
@@ -34,7 +34,7 @@ def importCSVReactionNodeToNeo(file_name):
 def importCSVReactionEdgeToNode(file_name):
     global reaction_dic
     query_list = []
-    with open (file_name, newline='') as csv_file:
+    with open (file_name, newline='', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             node1_id = hide_id(row['source'])
